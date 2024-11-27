@@ -1,0 +1,14 @@
+<!DCTYPE html>
+<html lang="en">
+<head>
+	<title>Log in page</title>
+</head>
+<body>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Login</button>
+	</form>
+	<a href="{% url 'register' %}"></a>
+</body>
+</html>
