@@ -1,36 +1,73 @@
-# Create Operation
+#CREATING Book Instance
+#importing Book models
 
-```python
 from bookshelf.models import Book
-book = Book.objects.create(title="1984", author="George Orwell", publication_year=1949)
-book
-# Output:
-# <Book: 1984 by George Orwell>
+
+#Creating a Book instance 
+
+new_book = Book.objects.create(title = "1984", author = "George Orwell", publication_year = 1949)    
+
+#Saving the added book
+
+new_book.save()
+
+print(new_book)
+
+#Expected output: 
+
+1984 by George Orwell (1949)
 
 
-# Retrieve Operation
+#RETRIEVING of the book
+from bookshelf.models import Book
 
-```python
-retrieved_book = Book.objects.get(title="1984")
-retrieved_book
-# Output:
-# <Book: 1984 by George Orwell>
+#Retrieving the books
+books = Book.objects.get.all()                                 
 
+#iterating through the records of the books
+for book in books:
+    print(book.title, book.author, book.publication_year)       
 
-# Update Operation
-
-```python
-retrieved_book.title = "Nineteen Eighty-Four"
-retrieved_book.save()
-retrieved_book
-# Output:
-# <Book: Nineteen Eighty-Four by George Orwell>
+#Expected outcome
+1984 George Orwell 1949
 
 
-# Delete Operation
+#UPDATING Book instance
+from bookshelf.models import Book
 
-```python
-retrieved_book.delete()
-Book.objects.all()
-# Output:
-# <QuerySet []>
+book =Book.objects.get(title="1984")
+
+#Updating the book title
+book.title = Book.objects.update(title = "Nineteen Eighty-Four") 
+
+#Saving the update
+book.save()
+
+#fetching the updated book to confirm if it was successful
+updated_book = Book.objects.get(title=book.title)
+
+#Printing the updated_book
+print(updated_book)
+
+#Output
+Nineteen Eighty-Four by George Orwell (1949)
+
+
+#DELETING the Book instance
+#importing Book models
+from bookshelf.models import Book
+
+#retriveing the book
+book = Book.objects.get(author="George Orwell")
+
+#Deleting the book instnace
+book.delete()
+
+#results
+(1, {'bookshelf.Book': 1})
+
+#Trying to retrieve all the books and confirm if deletion was #successful
+books = Book.objects.get.all()
+print(books)
+#Output showing an empty list
+<QuerySet []>
