@@ -16,3 +16,5 @@ def register(request):
 	else:
 	    form = CustomUserCreationForm()
 	return render(reuest, 'blog/templates/register.html', {'form': form})
+def login(request):
+	
