@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% blockcontent %}
+ <h2>registration</h2>
+ <form method="POST">
+  {% csrf_token %}
+  {{% form.aas_p%}}
+  <button type="submit">register</button>
+ </form>
+ <p>Alredy have account? <a href="{% url 'login' %}">Login</p> 
+{% endblock %}
+

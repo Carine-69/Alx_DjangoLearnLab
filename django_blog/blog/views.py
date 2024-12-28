@@ -1,18 +1,24 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
-from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm
-from django.contrib.auth.decorators import login_required
+from djnago.contrib import render, redirect
+from .form import registration
+from django.contrib import messages
 
-# Create your views here.
-
-def register(request):
+def registration(request):
 	if request.method == 'POST':
-	form = CustomUserCreationForm(request.POST)
+		form = UserRegistrtionForm(request.POST)
 		if form.is_valid():
-		user = form.save()
-		login(request,user)
-
+			form.save()
+			messages.sucess(request,'Your account has been created! you can now login.')
+			return redirect('login')
 	else:
-	    form = CustomUserCreationForm()
-	return render(reuest, 'blog/templates/register.html', {'form': form})
+		form = UserRegistrationForm()
+	return render(request, 'blog/templates/registation.html',{'form':form})
+
+def profile(request):
+	if request.method == 'POST',
+		form = UserRegistrationForm(requst.POST, instance=request.user)
+		if form.is_valid():
+			form.save()
+			return redirect('profile')
+	else:
+		form = UserRegistration(instance=request.user)
+	return render(request, 'blog/templates/profile.html',{'form':form})
