@@ -10,7 +10,7 @@ class CreationForm(UserCreationForm):
 		model=User
 		fields = ('username','email','password1','password2')
 
-class commentForm(forms.ModelForm):
+class CommentForm(forms.ModelForm):
 	class Meta:
 		model = comment
 		fields = ['comment']
