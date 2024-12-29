@@ -73,7 +73,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     return self.request.user == post.author  # Only allow the author to delete the post
 
 @login_required
-def add_comment(request, post_id):
+def CommentCreateView(request, post_id):
     post = Post.objects.get(id=post_id)
     if request.method == 'POST':
         form = CommentForm(request.POST)
