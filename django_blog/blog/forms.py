@@ -1,39 +1,25 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from .models import Comment, Post, Tag
-from django.forms import CheckboxSelectMultiple  # Import the widget
+from .models import Post, Tag
+from django.forms import CheckboxSelectMultiple
 
-# Form for User creation
-class CreationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password1', 'password2')
-
-class TagWidget(forms.CheckboxSelectMultiple):
+# Step 1: Define a custom TagWidget class
+class TagWidget(CheckboxSelectMultiple):
     """
     Custom widget for displaying tags as checkboxes.
     Inheriting from CheckboxSelectMultiple to render a list of checkboxes.
     """
-    pass
+    pass  # We can extend this further if we need additional customization.
 
-# Form for Comment creation
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['content']
-
-# Form for Post creation/editing, including tags
+# Step 2: Define the form for Post creation/editing, including tags
 class TagForm(forms.ModelForm):
     class Meta:
         model = Post  # Correct 'model' to 'Post'
         fields = ['title', 'content', 'tags']  # Match fields with the Post model
 
-     widgets = {
-        'tags': CheckboxSelectMultiple,  # Use CheckboxSelectMultiple for the 'tags' field
-    }
+        # Step 3: Use the widgets dictionary for custom widget handling
+        widgets = {
+            'tags': TagWidget()  # Use our custom TagWidget for rendering tags as checkboxes
+        }
 
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
@@ -50,3 +36,4 @@ class TagForm(forms.ModelForm):
             post.tags.add(tag)  # Associate each selected tag with the post
 
         return post
+
