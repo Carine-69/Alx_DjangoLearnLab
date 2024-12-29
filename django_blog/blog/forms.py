@@ -12,5 +12,5 @@ class CreationForm(UserCreationForm):
 
 class CommentForm(forms.ModelForm):
 	class Meta:
-		model = comment
-		fields = ['comment']
+		model = Comment
+		fields = ['content']
