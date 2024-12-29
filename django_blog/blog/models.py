@@ -13,7 +13,7 @@ class post(models.Model):
 	def __str__(self):
 		return self.title
 
-class comments(models.Model):
+class comment(models.Model):
 	post = models.ForeignKey(post, related_name='comments', on_delete=models.CASCADE)
 	author = models.ForeignKey(User, on_delete=models.CASCADE)
 	content = models.TextField()
