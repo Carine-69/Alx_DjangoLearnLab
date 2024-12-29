@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>{% if object %}Edit Post{% else %}Create Post{% endif %}</h2>
+
+  <!-- Form for creating or updating a post -->
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Display the form fields (title and content) -->
+    <button type="submit">{% if object %}Update{% else %}Create{% endif %} Post</button>
+  </form>
+
+  <!-- Link to return to the post list -->
+  <p><a href="{% url 'ListView' %}">Back to post list</a></p>
+{% endblock %}
+

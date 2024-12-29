@@ -64,7 +64,7 @@ class postUpdateView(LoginRequiredMixin, UserPassesMixin, UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    template_name = 'blog/post_delete.html'
+    template_name = 'blog/templates/blog/post_delete.html'
     success_url = reverse_lazy('post_list')  # Redirect to the post list page after deletion
 
 	def test_func(self):
