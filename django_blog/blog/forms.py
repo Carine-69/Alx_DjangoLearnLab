@@ -12,6 +12,13 @@ class CreationForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
+class TagWidget(forms.CheckboxSelectMultiple):
+    """
+    Custom widget for displaying tags as checkboxes.
+    Inheriting from CheckboxSelectMultiple to render a list of checkboxes.
+    """
+    pass
+
 # Form for Comment creation
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -41,4 +48,5 @@ class TagForm(forms.ModelForm):
             post.tags.add(tag)  # Associate each selected tag with the post
 
         return post
+
 
