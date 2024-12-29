@@ -78,20 +78,20 @@ def CommentCreateView(request, post_id):
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-\            comment = form.save(commit=False)
+            comment = form.save(commit=False)
             comment.author = request.user
             comment.post = post
             comment.save()
             return redirect('post_detail', pk=post_id)
     else:
         form = CommentForm()
-    return render(request, 'blog/add_comment.html', {'form': form, 'post': post})
+    return render(request, 'blog/templates/blog/add_comment.html', {'form': form, 'post': post})
 
 # View for editing a comment
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     fields = ['content']
-    template_name = 'blog/comment_form.html'
+    template_name = 'blog/templates/blog/comment_form.html'
 
     def test_func(self):
         comment = self.get_object()
@@ -103,7 +103,7 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 # View for deleting a comment
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
-    template_name = 'blog/comment_confirm_delete.html'
+    template_name = 'blog/templates/blog/comment_confirm_delete.html'
 
     def test_func(self):
         comment = self.get_object()
@@ -111,4 +111,9 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'pk': self.object.post.pk})
+
+    def posts_by_tag(request, tag_name):
+    tag = Tag.objects.get(name=tag_name)
+    posts = tag.posts.all()
+    return render(request, 'blog/templates/blog/posts_by_tag.html', {'posts': posts, 'tag': tag})
 

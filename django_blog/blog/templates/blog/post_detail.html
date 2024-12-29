@@ -3,3 +3,8 @@
 <p>{{ post.content }}</p>
 <a href="{% url 'post_update' post.pk %}">Edit</a>
 <a href="{% url 'post_delete' post.pk %}">Delete</a>
+<div class="tags">
+    {% for tag in post.tags.all %}
+        <a href="{% url 'posts_by_tag' tag.name %}">{{ tag.name }}</a>
+    {% endfor %}
+</div>

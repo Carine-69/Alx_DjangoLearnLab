@@ -20,5 +20,6 @@ urlpatterns = [
     path('post/<int:pk>/comments/new/', views.add_comment, name='add_comment'),  # Add a new comment
     path('comment/<int:pk>/update/', views.CommentUpdateView.as_view(), name='comment_update'),  # Update an existing comment
     path('comment/<int:pk>/delete/', views.CommentDeleteView.as_view(), name='comment_delete'),  # Delete a comment
+    path('tags/<str:tag_name>/', views.posts_by_tag, name='posts_by_tag'),
 ]
 
