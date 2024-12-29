@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from djnago.db.models import Q
 from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import post, comment
@@ -117,3 +118,21 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     posts = tag.posts.all()
     return render(request, 'blog/templates/blog/posts_by_tag.html', {'posts': posts, 'tag': tag})
 
+   def search(request):
+    query = request.GET.get('q', '')  # Get the search query from the URL
+    if query:
+        posts = Post.objects.filter(
+            Q(title__icontains=query) |  # Search in the title
+            Q(content__icontains=query) |  # Search in the content
+            Q(tags__name__icontains=query)  # Search in the tag name
+        ).distinct()  # Ensure no duplicates in the result
+    else:
+        posts = Post.objects.all()  # If no query, return all posts
+
+    return render(request, 'blog/templates/blog/search_results.html', {'posts': posts, 'query': query})
+
+# View for displaying posts by tag
+def posts_by_tag(request, tag_name):
+    tag = Tag.objects.get(name=tag_name)
+    posts = tag.posts.all()  # Get all posts associated with this tag
+    return render(request, 'blog/templates/blog/posts_by_tag.html', {'posts': posts, 'tag': tag})
