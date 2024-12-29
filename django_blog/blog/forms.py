@@ -3,7 +3,7 @@ from .models import comment
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.models import User
-from .models import post, tag
+from .models import Post, Tag
 
 class CreationForm(UserCreationForm):
 	email = forms.EmailField(required=True)
@@ -17,11 +17,11 @@ class CommentForm(forms.ModelForm):
 		model = Comment
 		fields = ['content']
 
-class tagForm(forms.ModelForm):
+class TagForm(forms.ModelForm):
 	class Meta:
-		method = Post
-		fields = ['title','contents', 'tags']
-	tags = forms.ModelMultipleChoiceField(querySet=tag.objects.all(), required=False)
+		model = Post
+		fields = ['title','content', 'tags']
+	tags = forms.ModelMultipleChoiceField(queryset=tag.objects.all(), required=False)
 
 
 
