@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User  # Correct import for the User model
-from .models import Comment, Post, Tag  # Correct import for your models
+from django.contrib.auth.models import User
+from .models import Comment, Post, Tag
+from django.forms import CheckboxSelectMultiple  # Import the widget
 
 # Form for User creation
 class CreationForm(UserCreationForm):
@@ -23,8 +24,12 @@ class TagForm(forms.ModelForm):
         model = Post  # Correct 'model' to 'Post'
         fields = ['title', 'content', 'tags']  # Match fields with the Post model
 
-    # Use ModelMultipleChoiceField to allow selecting multiple tags
-    tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), required=False)
+    # Define the tags field using the CheckboxSelectMultiple widget
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(), 
+        required=False,
+        widget=CheckboxSelectMultiple()  # This widget renders checkboxes for tags
+    )
 
     def save(self, commit=True):
         post = super().save(commit=False)  # Save post object first
