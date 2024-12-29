@@ -1,0 +1,7 @@
+<!-- blog/templates/blog/post_form.html -->
+<h1>{% block title %}Create/Update Post{% endblock %}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>

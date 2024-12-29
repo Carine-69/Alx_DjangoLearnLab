@@ -1,0 +1,13 @@
+<!-- blog/templates/blog/post_list.html -->
+<h1>All Posts</h1>
+<ul>
+    {% for post in posts %}
+        <li>
+            <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+            <p>{{ post.content|slice:":100" }}...</p>
+            <a href="{% url 'post_update' post.pk %}">Edit</a>
+            <a href="{% url 'post_delete' post.pk %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'post_create' %}">Create a New Post</a>

@@ -1,0 +1,7 @@
+<!-- blog/templates/blog/post_confirm_delete.html -->
+<h1>Are you sure you want to delete the post: {{ object.title }}?</h1>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete it</button>
+</form>
+
