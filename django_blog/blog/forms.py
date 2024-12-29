@@ -31,11 +31,13 @@ class TagForm(forms.ModelForm):
         model = Post  # Correct 'model' to 'Post'
         fields = ['title', 'content', 'tags']  # Match fields with the Post model
 
-    # Define the tags field using the CheckboxSelectMultiple widget
+     widgets = {
+        'tags': CheckboxSelectMultiple,  # Use CheckboxSelectMultiple for the 'tags' field
+    }
+
     tags = forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.all(), 
-        required=False,
-        widget=CheckboxSelectMultiple()  # This widget renders checkboxes for tags
+        queryset=Tag.objects.all(),
+        required=False
     )
 
     def save(self, commit=True):
@@ -48,5 +50,3 @@ class TagForm(forms.ModelForm):
             post.tags.add(tag)  # Associate each selected tag with the post
 
         return post
-
-
